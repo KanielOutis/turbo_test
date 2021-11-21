@@ -1,0 +1,39 @@
+<%= turbo_frame_tag(dom_id(concert)) do %>
+  <%= form_with(model: concert) do |form| %>
+    <% if form.object.errors.present? %>
+      <div class="text-red-500 border-red-800 font-bold border-2 p-2 mb-2">
+        <ul>
+          <% concert.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="col-span-1 text-xl my-10">
+      <div>
+        <%= form.label :title, style: "display: block" %>
+        <%= form.text_field :title %>
+      </div>
+
+      <div>
+        <%= form.label :date, style: "display: block" %>
+        <%= form.datetime_field :date %>
+      </div>
+
+      <div>
+        <%= form.label :body, style: "display: block" %>
+        <%= form.text_field :body %>
+      </div>
+
+      <%= form.button :submit %>
+      <% if @concert.persisted? %>
+        <%= link_to(
+              "Cancel",
+              concert_path(@concert, inline: true),
+              class: "#{SimpleForm.button_class} py-2 mt-4"
+            ) %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
